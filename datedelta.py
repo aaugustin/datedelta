@@ -128,6 +128,12 @@ class datedelta:
 
             # Add years.
             year += self._years
+            # Adjust the month and day if the target day doesn't exist.
+            if day > _days_in_month(year, month):
+                # This branch is never taken when month == 12 because day is
+                # always in 1..31 and because December has 31 days.
+                month += 1
+                day = 1
 
             # Add months.
             month += self._months
@@ -160,6 +166,12 @@ class datedelta:
 
             # Subtract years.
             year -= self._years
+            # Adjust the month and day if the target day doesn't exist.
+            if day > _days_in_month(year, month):
+                # This branch is never taken when month == 12 because day is
+                # always in 1..31 and because December has 31 days.
+                month += 1
+                day = 1
 
             # Subtract months.
             month -= self._months
