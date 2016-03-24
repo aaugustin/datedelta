@@ -17,7 +17,7 @@ with open(README) as f:
 
 setuptools.setup(
     name='datedelta',
-    version='1.0.1',
+    version='1.0.2',
     author='Aymeric Augustin',
     author_email='aymeric.augustin@m4x.org',
     url='https://github.com/aaugustin/datedelta',

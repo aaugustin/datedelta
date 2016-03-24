@@ -127,30 +127,34 @@ class datedelta:
             day = other.day
 
             # Add years.
-            year += self._years
-            # Adjust the month and day if the target day doesn't exist.
-            if day > _days_in_month(year, month):
-                # This branch is never taken when month == 12 because day is
-                # always in 1..31 and because December has 31 days.
-                month += 1
-                day = 1
+            if self._years:
+                year += self._years
+                # Adjust the month and day if the target day doesn't exist.
+                if day > _days_in_month(year, month):
+                    # This branch is never taken when month == 12 because day is
+                    # always in 1..31 and because December has 31 days.
+                    month += 1
+                    day = 1
 
             # Add months.
-            month += self._months
-            # Adjust the year if the target month isn't in 1..12.
-            dyear, month0 = divmod(month - 1, 12)
-            year += dyear
-            month = month0 + 1
-            # Adjust the month and day if the target day doesn't exist.
-            if day > _days_in_month(year, month):
-                # This branch is never taken when month == 12 because day is
-                # always in 1..31 and because December has 31 days.
-                month += 1
-                day = 1
+            if self._months:
+                month += self._months
+                # Adjust the year if the target month isn't in 1..12.
+                dyear, month0 = divmod(month - 1, 12)
+                year += dyear
+                month = month0 + 1
+                # Adjust the month and day if the target day doesn't exist.
+                if day > _days_in_month(year, month):
+                    # This branch is never taken when month == 12 because day is
+                    # always in 1..31 and because December has 31 days.
+                    month += 1
+                    day = 1
+
+            result = other.replace(year, month, day)
 
             # Add days.
-            result = other.replace(year, month, day)
-            result += datetime.timedelta(days=self._days)
+            if self._days:
+                result += datetime.timedelta(days=self._days)
 
             return result
 
@@ -165,30 +169,34 @@ class datedelta:
             day = other.day
 
             # Subtract years.
-            year -= self._years
-            # Adjust the month and day if the target day doesn't exist.
-            if day > _days_in_month(year, month):
-                # This branch is never taken when month == 12 because day is
-                # always in 1..31 and because December has 31 days.
-                month += 1
-                day = 1
+            if self._years:
+                year -= self._years
+                # Adjust the month and day if the target day doesn't exist.
+                if day > _days_in_month(year, month):
+                    # This branch is never taken when month == 12 because day is
+                    # always in 1..31 and because December has 31 days.
+                    month += 1
+                    day = 1
 
             # Subtract months.
-            month -= self._months
-            # Adjust the year if the target month isn't in 1..12.
-            dyear, month0 = divmod(month - 1, 12)
-            year += dyear
-            month = month0 + 1
-            # Adjust the month and day if the target day doesn't exist.
-            if day > _days_in_month(year, month):
-                # This branch is never taken when month == 12 because day is
-                # always in 1..31 and because December has 31 days.
-                month += 1
-                day = 1
+            if self._months:
+                month -= self._months
+                # Adjust the year if the target month isn't in 1..12.
+                dyear, month0 = divmod(month - 1, 12)
+                year += dyear
+                month = month0 + 1
+                # Adjust the month and day if the target day doesn't exist.
+                if day > _days_in_month(year, month):
+                    # This branch is never taken when month == 12 because day is
+                    # always in 1..31 and because December has 31 days.
+                    month += 1
+                    day = 1
+
+            result = other.replace(year, month, day)
 
             # Subtract days.
-            result = other.replace(year, month, day)
-            result -= datetime.timedelta(days=self._days)
+            if self._days:
+                result -= datetime.timedelta(days=self._days)
 
             return result
 
