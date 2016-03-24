@@ -89,7 +89,7 @@ There are two date arithmetic traps in the Gregorian calendar:
 
 In both cases, the result must be changed to the first day of the next month.
 
-Provided periods are represented by [start date inclusive, end date exclusive),
+Provided periods are represented by (start date inclusive, end date exclusive),
 this method gives consistent results. (This representation of periods is akin
 to 0-based indexing, which is the convention Python uses.)
 
@@ -147,7 +147,7 @@ depending on the order of operations:
     datetime.date(2016, 9, 1)
 
 To avoid problems, you should always start from the same reference date and add
-a singe ``timedelta``. Don't chain additions or subtractions.
+a single ``datedelta``. Don't chain additions or subtractions.
 
 To minimize the risk of incorrect results, ``datedelta`` only implements
 operations that have unambiguous semantics:
