@@ -1,9 +1,23 @@
 # For convenience and readability in tests, use short aliases.
 
-from datetime import date as d, timedelta as td
+from datetime import date as d
+from datetime import timedelta as td
 
 import pytest
 from datedelta import datedelta as dd
+from datedelta import DAY, MONTH, YEAR
+
+
+@pytest.mark.parametrize(
+    ('constant', 'value'),
+    [
+        (DAY, dd(days=1)),
+        (MONTH, dd(months=1)),
+        (YEAR, dd(years=1)),
+    ],
+)
+def test_constants(constant, value):
+    assert constant == value
 
 
 def test_years_must_be_integer():

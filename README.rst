@@ -76,6 +76,30 @@ You can also subtract a ``datedelta`` from a ``date``:
 These results may appear slightly surprising. However, they're consistent, for
 reasons explained below.
 
+Constants are available for convenience::
+
+    >>> import datetime
+    >>> import datedelta
+
+    >>> datetime.date(2016, 1, 1) + datedelta.YEAR
+    datetime.date(2017, 1, 1)
+
+    >>> datetime.date(2016, 2, 29) + datedelta.YEAR
+    datetime.date(2017, 3, 1)
+
+    >>> datetime.date(2016, 1, 1) + datedelta.MONTH
+    datetime.date(2016, 2, 1)
+
+    >>> datetime.date(2016, 1, 31) + datedelta.MONTH
+    datetime.date(2016, 3, 1)
+
+    >>> datetime.date(2016, 1, 1) + datedelta.DAY
+    datetime.date(2016, 1, 2)
+
+
+``datedelta.DAY`` is provided for consistency only. It behaves exactly like
+``datetime.timedelta(1)``.
+
 Behavior
 ========
 
@@ -188,6 +212,11 @@ there's little to gain by switching to ``datedelta``.
 
 Changelog
 =========
+
+1.1
+---
+
+* Add ``YEAR``, ``MONTH``, and ``DAY`` constants.
 
 1.0
 ---

@@ -215,6 +215,15 @@ class datedelta:
         return self
 
 
+# Public constants for convenience.
+
+YEAR = datedelta(years=1)
+
+MONTH = datedelta(months=1)
+
+DAY = datedelta(days=1)
+
+
 # There's a private implementation of the same logic in the datetime module.
 
 _DAYS_IN_MONTH = [None, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
