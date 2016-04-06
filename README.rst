@@ -8,16 +8,67 @@ Gregorian calendar. It can also subtract years, months, or days from dates.
 
 Typically, it's useful to compute yearly or monthly subscriptions periods.
 
-Usage
-=====
-
-Install datedelta with:
+Installation
+============
 
 .. code-block:: bash
 
     pip install datedelta
 
-Then you can add a ``datedelta`` to a ``date``:
+Usage
+=====
+
+The most common operations are adding a ``datedelta`` to a ``date`` and
+subtracting a ``datedelta`` from a ``date``.
+
+Basic intervals
+---------------
+
+The ``YEAR``, ``MONTH``, and ``DAY`` constants allow expressing common
+calculations with little code.
+
+.. code-block:: python
+
+    >>> import datetime
+    >>> import datedelta
+
+    >>> datetime.date(2016, 1, 1) + datedelta.YEAR
+    datetime.date(2017, 1, 1)
+
+    >>> datetime.date(2017, 1, 1) - datedelta.YEAR
+    datetime.date(2016, 1, 1)
+
+    >>> datetime.date(2016, 2, 29) + datedelta.YEAR
+    datetime.date(2017, 3, 1)
+
+    >>> datetime.date(2017, 3, 1) - datedelta.YEAR
+    datetime.date(2016, 3, 1)
+
+    >>> datetime.date(2016, 1, 1) + datedelta.MONTH
+    datetime.date(2016, 2, 1)
+
+    >>> datetime.date(2016, 2, 1) - datedelta.MONTH
+    datetime.date(2016, 1, 1)
+
+    >>> datetime.date(2016, 1, 31) + datedelta.MONTH
+    datetime.date(2016, 3, 1)
+
+    >>> datetime.date(2016, 3, 1) - datedelta.MONTH
+    datetime.date(2016, 2, 1)
+
+    >>> datetime.date(2016, 1, 1) + datedelta.DAY
+    datetime.date(2016, 1, 2)
+
+    >>> datetime.date(2016, 1, 1) - datedelta.DAY
+    datetime.date(2015, 12, 31)
+
+Note that ``datedelta.DAY`` behaves exactly like ``datetime.timedelta(1)``.
+It's only provided for consistency.
+
+Arbitrary intervals
+-------------------
+
+``datedelta`` objects provide support for arbitrary calculations.
 
 .. code-block:: python
 
@@ -27,78 +78,81 @@ Then you can add a ``datedelta`` to a ``date``:
     >>> datetime.date(2016, 3, 23) + datedelta.datedelta(years=1, months=1, days=-1)
     datetime.date(2017, 4, 22)
 
+    >>> datetime.date(2016, 3, 23) - datedelta.datedelta(years=-1, months=-1, days=1)
+    datetime.date(2017, 4, 22)
+
     >>> datetime.date(2016, 2, 29) + datedelta.datedelta(years=2)
+    datetime.date(2018, 3, 1)
+
+    >>> datetime.date(2020, 2, 29) - datedelta.datedelta(years=2)
     datetime.date(2018, 3, 1)
 
     >>> datetime.date(2016, 2, 29) + datedelta.datedelta(years=2, days=-1)
     datetime.date(2018, 2, 28)
 
+    >>> datetime.date(2020, 2, 29) - datedelta.datedelta(years=2, days=1)
+    datetime.date(2018, 2, 28)
+
     >>> datetime.date(2016, 2, 29) + datedelta.datedelta(years=2, months=6)
+    datetime.date(2018, 9, 1)
+
+    >>> datetime.date(2020, 2, 29) - datedelta.datedelta(years=2, months=-6)
     datetime.date(2018, 9, 1)
 
     >>> datetime.date(2016, 2, 29) + datedelta.datedelta(years=4)
     datetime.date(2020, 2, 29)
 
-    >>> datetime.date(2016, 2, 29) + datedelta.datedelta(years=4, days=1)
-    datetime.date(2020, 3, 1)
-
-    >>> datetime.date(2016, 2, 29) + datedelta.datedelta(years=4, months=6)
-    datetime.date(2020, 8, 29)
-
-You can also subtract a ``datedelta`` from a ``date``:
-
-.. code-block:: python
-
-    >>> import datetime
-    >>> import datedelta
-
-    >>> datetime.date(2016, 3, 23) - datedelta.datedelta(years=-1, months=-1, days=1)
-    datetime.date(2017, 4, 22)
-
-    >>> datetime.date(2020, 2, 29) - datedelta.datedelta(years=2)
-    datetime.date(2018, 3, 1)
-
-    >>> datetime.date(2020, 2, 29) - datedelta.datedelta(years=2, days=1)
-    datetime.date(2018, 2, 28)
-
-    >>> datetime.date(2020, 2, 29) - datedelta.datedelta(years=2, months=-6)
-    datetime.date(2018, 9, 1)
-
     >>> datetime.date(2020, 2, 29) - datedelta.datedelta(years=4)
     datetime.date(2016, 2, 29)
 
+    >>> datetime.date(2016, 2, 29) + datedelta.datedelta(years=4, days=1)
+    datetime.date(2020, 3, 1)
+
     >>> datetime.date(2020, 2, 29) - datedelta.datedelta(years=4, days=-1)
     datetime.date(2016, 3, 1)
+
+    >>> datetime.date(2016, 2, 29) + datedelta.datedelta(years=4, months=6)
+    datetime.date(2020, 8, 29)
 
     >>> datetime.date(2020, 2, 29) - datedelta.datedelta(years=4, months=-6)
     datetime.date(2016, 8, 29)
 
 These results may appear slightly surprising. However, they're consistent, for
-reasons explained below.
+reasons explained in the "Behavior" section below.
 
-Constants are available for convenience::
+Other operations
+----------------
 
-    >>> import datetime
+``datedelta`` instances can be added, subtracted, and multiplied with an
+integer. However there are some restrictions on addition and subtraction.
+
+As demonstrated in the "Limitations" section below, adding then subtracting a
+given datedelta to a date doesn't always return the original date. In order to
+prevent bugs caused by this behavior, when the result of adding or subtracting
+two ``datedelta`` isn't well defined, that operation raises ``ValueError``.
+
+.. code-block:: python
+
     >>> import datedelta
 
-    >>> datetime.date(2016, 1, 1) + datedelta.YEAR
-    datetime.date(2017, 1, 1)
+    >>> datedelta.YEAR + datedelta.YEAR
+    datedelta.datedelta(years=2)
 
-    >>> datetime.date(2016, 2, 29) + datedelta.YEAR
-    datetime.date(2017, 3, 1)
+    >>> 3 * datedelta.YEAR
+    datedelta.datedelta(years=3)
 
-    >>> datetime.date(2016, 1, 1) + datedelta.MONTH
-    datetime.date(2016, 2, 1)
+    >>> datedelta.YEAR - datedelta.DAY
+    datedelta.datedelta(years=1, days=-1)
 
-    >>> datetime.date(2016, 1, 31) + datedelta.MONTH
-    datetime.date(2016, 3, 1)
+    >>> datedelta.YEAR - datedelta.YEAR
+    Traceback (most recent call last):
+        ...
+    ValueError: cannot subtract datedeltas with same signs
 
-    >>> datetime.date(2016, 1, 1) + datedelta.DAY
-    datetime.date(2016, 1, 2)
-
-
-``datedelta.DAY`` is provided for consistency only. It behaves exactly like
-``datetime.timedelta(1)``.
+    >>> datedelta.datedelta(months=6) + datedelta.datedelta(months=-3)
+    Traceback (most recent call last):
+        ...
+    ValueError: cannot add datedeltas with opposite signs
 
 Behavior
 ========
@@ -113,9 +167,10 @@ There are two date arithmetic traps in the Gregorian calendar:
 
 In both cases, the result must be changed to the first day of the next month.
 
-Provided periods are represented by (start date inclusive, end date exclusive),
-this method gives consistent results. (This representation of periods is akin
-to 0-based indexing, which is the convention Python uses.)
+This method gives consistent results provided periods are represented by
+(start date inclusive, end date exclusive) — that's [start date, end date) if
+you prefer the mathematical notation. This representation of periods is akin
+to 0-based indexing, which is the convention Python uses.
 
 For example, if someone subscribes for a year starting on 2016-02-29 inclusive,
 the end date must be 2017-03-01 exclusive. If it was 2016-02-28 exclusive, the
