@@ -305,6 +305,7 @@ def test_add_datedelta(delta_1, delta_2, delta):
         # Unsupported mixed deltas.
         (dd(years=3), dd(years=-1)),
         (dd(years=2, months=5), dd(months=-2, days=-6)),
+        (dd(years=2, weeks=-5), dd(weeks=2, days=-6)),
         (dd(years=2, months=1, days=-10), dd(months=2, days=4)),
     ]
 )
@@ -338,15 +339,20 @@ def test_add_unsupported_type(delta_1, other):
         # Positive deltas.
         (dd(years=2), dd(), dd(years=2)),
         (dd(), dd(months=-3, days=-6), dd(months=3, days=6)),
+        (dd(), dd(weeks=-3, days=-6), dd(weeks=3, days=6)),
         (dd(years=1), dd(years=-1), dd(years=2)),
         (dd(years=2), dd(months=-3, days=-6), dd(years=2, months=3, days=6)),
+        (dd(years=2), dd(weeks=-4, days=-6), dd(years=2, weeks=4, days=6)),
         (dd(years=2, months=1), dd(months=-2, days=-6), dd(years=2, months=3, days=6)),
+        (dd(years=2, weeks=1), dd(weeks=-2, days=-6), dd(years=2, weeks=3, days=6)),
         (dd(years=2, months=1, days=2), dd(months=-2, days=-4), dd(years=2, months=3, days=6)),
         # Negative deltas.
         (dd(years=-2), dd(), dd(years=-2)),
         (dd(), dd(months=3, days=6), dd(months=-3, days=-6)),
+        (dd(), dd(weeks=3, days=6), dd(weeks=-3, days=-6)),
         (dd(years=-1), dd(years=1), dd(years=-2)),
         (dd(years=-2), dd(months=3, days=6), dd(years=-2, months=-3, days=-6)),
+        (dd(years=-2), dd(weeks=4, days=6), dd(years=-2, weeks=-4, days=-6)),
         (dd(years=-2, months=-1), dd(months=2, days=6), dd(years=-2, months=-3, days=-6)),
         (dd(years=-2, months=-1, days=-2), dd(months=2, days=4), dd(years=-2, months=-3, days=-6)),
         # Supported mixed deltas.
@@ -385,10 +391,10 @@ def test_subtract_unsupported_datedelta(delta_1, delta_2):
         (dd(years=1), 1, dd(years=1)),
         (dd(years=1), 2, dd(years=2)),
         (dd(years=1), -1, dd(years=-1)),
-        (dd(years=2, months=3, days=6), 0, dd()),
-        (dd(years=2, months=3, days=6), 1, dd(years=2, months=3, days=6)),
-        (dd(years=2, months=3, days=6), 2, dd(years=4, months=6, days=12)),
-        (dd(years=2, months=3, days=6), -1, dd(years=-2, months=-3, days=-6)),
+        (dd(years=2, months=3, weeks=4, days=6), 0, dd()),
+        (dd(years=2, months=3, weeks=4, days=6), 1, dd(years=2, months=3, weeks=4, days=6)),
+        (dd(years=2, months=3, weeks=4, days=6), 2, dd(years=4, months=6, weeks=8, days=12)),
+        (dd(years=2, months=3, weeks=4, days=6), -1, dd(years=-2, months=-3, weeks=-4, days=-6)),
     ]
 )
 def test_multiply_integer(delta_1, count, delta):
