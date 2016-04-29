@@ -227,18 +227,22 @@ def test_repr_and_str(delta_repr, delta_str):
     [
         # Same type.
         (dd(), dd(), True),
-        (dd(), dd(years=0, months=0, days=0), True),
+        (dd(), dd(years=0, months=0, weeks=0, days=0), True),
         (dd(years=2), dd(years=2), True),
-        (dd(years=2), dd(years=2, months=0, days=0), True),
+        (dd(years=2), dd(years=2, months=0, weeks=0, days=0), True),
+        (dd(months=3, weeks=4), dd(months=3, weeks=4), True),
+        (dd(months=3, weeks=4, days=0), dd(years=0, months=3, weeks=4), True),
         (dd(months=3, days=6), dd(months=3, days=6), True),
         (dd(months=3, days=6), dd(years=0, months=3, days=6), True),
-        (dd(years=2, months=3, days=6), dd(years=2, months=3, days=6), True),
+        (dd(years=2, months=3, weeks=4, days=6), dd(years=2, months=3, weeks=4, days=6), True),
         (dd(), dd(years=2), False),
         (dd(years=1), dd(years=2), False),
         (dd(), dd(months=3, days=6), False),
         (dd(months=3, days=6), dd(months=3, days=3), False),
+        (dd(), dd(weeks=2), False),
+        (dd(weeks=1), dd(weeks=2), False),
         (dd(years=2), dd(months=3, days=6), False),
-        (dd(years=2), dd(years=2, months=3, days=6), False),
+        (dd(years=2), dd(years=2, months=3, weeks=4, days=6), False),
         # Other types.
         (dd(), 0, False),
         (dd(), None, False),
@@ -266,21 +270,29 @@ def test_equal_not_equal_and_hash(delta_1, delta_2, is_equal):
         # Positive deltas.
         (dd(years=2), dd(), dd(years=2)),
         (dd(), dd(months=3, days=6), dd(months=3, days=6)),
+        (dd(), dd(months=3, weeks=4), dd(months=3, weeks=4)),
         (dd(years=1), dd(years=1), dd(years=2)),
         (dd(years=2), dd(months=3, days=6), dd(years=2, months=3, days=6)),
+        (dd(years=2), dd(weeks=4, days=6), dd(years=2, weeks=4, days=6)),
         (dd(years=2, months=1), dd(months=2, days=6), dd(years=2, months=3, days=6)),
         (dd(years=2, months=1, days=2), dd(months=2, days=4), dd(years=2, months=3, days=6)),
+        (dd(years=2, months=1, weeks=1, days=2), dd(months=2, days=4), dd(years=2, months=3, weeks=1, days=6)),
         # Negative deltas.
         (dd(years=-2), dd(), dd(years=-2)),
         (dd(), dd(months=-3, days=-6), dd(months=-3, days=-6)),
+        (dd(), dd(months=-3, weeks=-4), dd(months=-3, weeks=-4)),
         (dd(years=-1), dd(years=-1), dd(years=-2)),
         (dd(years=-2), dd(months=-3, days=-6), dd(years=-2, months=-3, days=-6)),
+        (dd(years=-2), dd(weeks=-4, days=-6), dd(years=-2, weeks=-4, days=-6)),
         (dd(years=-2, months=-1), dd(months=-2, days=-6), dd(years=-2, months=-3, days=-6)),
         (dd(years=-2, months=-1, days=-2), dd(months=-2, days=-4), dd(years=-2, months=-3, days=-6)),
+        (dd(years=-2, months=-1, weeks=-1, days=-2), dd(months=-2, days=-4), dd(years=-2, months=-3, weeks=-1, days=-6)),
         # Supported mixed deltas.
         (dd(years=2), dd(months=-3, days=6), dd(years=2, months=-3, days=6)),
+        (dd(years=2), dd(weeks=-4, days=6), dd(years=2, weeks=-4, days=6)),
         (dd(years=-2, months=1), dd(months=2, days=-6), dd(years=-2, months=3, days=-6)),
         (dd(years=2, months=1, days=-2), dd(months=2, days=-4), dd(years=2, months=3, days=-6)),
+        (dd(years=2, months=-1, weeks=1, days=-2), dd(months=-2, weeks=2, days=-4), dd(years=2, months=-3, weeks=3, days=-6)),
     ]
 )
 def test_add_datedelta(delta_1, delta_2, delta):
