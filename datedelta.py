@@ -143,7 +143,6 @@ class datedelta:
         if isinstance(other, datetime.date):
             year = other.year
             month = other.month
-            week = other.week
             day = other.day
 
             # Add years.
@@ -190,7 +189,6 @@ class datedelta:
         if isinstance(other, datetime.date):
             year = other.year
             month = other.month
-            week = other.week
             day = other.day
 
             # Subtract years.
