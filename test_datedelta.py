@@ -34,6 +34,13 @@ def test_months_must_be_integer():
     assert "months must be an integer value" in str(exc)
 
 
+def test_weeks_must_be_integer():
+    with pytest.raises(ValueError) as exc:
+        dd(weeks=7.5)
+
+    assert "weeks must be an integer value" in str(exc)
+
+
 def test_days_must_be_integer():
     with pytest.raises(ValueError) as exc:
         dd(days=8.5)
@@ -42,49 +49,53 @@ def test_days_must_be_integer():
 
 
 def test_can_get_years_attribute():
-    assert dd(years=2, months=3, days=6).years == 2
+    assert dd(years=2, months=3, weeks=4, days=6).years == 2
 
 
 def test_can_get_months_attribute():
-    assert dd(years=2, months=3, days=6).months == 3
+    assert dd(years=2, months=3, weeks=4, days=6).months == 3
+
+
+def test_can_get_weeks_attribute():
+    assert dd(years=2, months=3, weeks=4, days=6).weeks == 4
 
 
 def test_can_get_days_attribute():
-    assert dd(years=2, months=3, days=6).days == 6
+    assert dd(years=2, months=3, weeks=4, days=6).days == 6
 
 
 def test_cannot_set_years_attribute():
-    delta = dd(years=2, months=3, days=6)
+    delta = dd(years=2, months=3, weeks=4, days=6)
     with pytest.raises(AttributeError):
         delta.years = 2
 
 
 def test_cannot_set_months_attribute():
-    delta = dd(years=2, months=3, days=6)
+    delta = dd(years=2, months=3, weeks=4, days=6)
     with pytest.raises(AttributeError):
         delta.years = 3
 
 
 def test_cannot_set_days_attribute():
-    delta = dd(years=2, months=3, days=6)
+    delta = dd(years=2, months=3, weeks=4, days=6)
     with pytest.raises(AttributeError):
         delta.years = 6
 
 
 def test_cannot_delete_years_attribute():
-    delta = dd(years=2, months=3, days=6)
+    delta = dd(years=2, months=3, weeks=4, days=6)
     with pytest.raises(AttributeError):
         del delta.years
 
 
 def test_cannot_delete_months_attribute():
-    delta = dd(years=2, months=3, days=6)
+    delta = dd(years=2, months=3, weeks=4, days=6)
     with pytest.raises(AttributeError):
         del delta.years
 
 
 def test_cannot_delete_days_attribute():
-    delta = dd(years=2, months=3, days=6)
+    delta = dd(years=2, months=3, weeks=4, days=6)
     with pytest.raises(AttributeError):
         del delta.years
 
@@ -97,65 +108,111 @@ def test_cannot_delete_days_attribute():
         # Positive singular values.
         ('dd(years=1)', '1 year'),
         ('dd(months=1)', '1 month'),
+        ('dd(weeks=1)', '1 week'),
         ('dd(days=1)', '1 day'),
         ('dd(years=1, months=1)', '1 year, 1 month'),
+        ('dd(years=1, weeks=1)', '1 year, 1 week'),
         ('dd(years=1, days=1)', '1 year, 1 day'),
+        ('dd(months=1, weeks=1)', '1 month, 1 week'),
         ('dd(months=1, days=1)', '1 month, 1 day'),
-        ('dd(years=1, months=1, days=1)', '1 year, 1 month, 1 day'),
+        ('dd(weeks=1, days=1)', '1 week, 1 day'),
+        ('dd(years=1, months=1, weeks=1, days=1)', '1 year, 1 month, 1 week, 1 day'),
         # Negative singular values.
         ('dd(years=-1)', '-1 year'),
         ('dd(months=-1)', '-1 month'),
+        ('dd(weeks=-1)', '-1 week'),
         ('dd(days=-1)', '-1 day'),
         ('dd(years=-1, months=-1)', '-1 year, -1 month'),
+        ('dd(years=-1, weeks=-1)', '-1 year, -1 week'),
         ('dd(years=-1, days=-1)', '-1 year, -1 day'),
+        ('dd(months=-1, weeks=-1)', '-1 month, -1 week'),
         ('dd(months=-1, days=-1)', '-1 month, -1 day'),
-        ('dd(years=-1, months=-1, days=-1)', '-1 year, -1 month, -1 day'),
+        ('dd(weeks=-1, days=-1)', '-1 week, -1 day'),
+        ('dd(years=-1, months=-1, weeks=-1, days=-1)', '-1 year, -1 month, -1 week, -1 day'),
         # Mixed singular values.
         ('dd(years=1, months=-1)', '1 year, -1 month'),
         ('dd(years=-1, months=1)', '-1 year, 1 month'),
+        ('dd(years=1, weeks=-1)', '1 year, -1 week'),
+        ('dd(years=-1, weeks=1)', '-1 year, 1 week'),
         ('dd(years=1, days=-1)', '1 year, -1 day'),
         ('dd(years=-1, days=1)', '-1 year, 1 day'),
+        ('dd(months=1, weeks=-1)', '1 month, -1 week'),
+        ('dd(months=-1, weeks=1)', '-1 month, 1 week'),
         ('dd(months=1, days=-1)', '1 month, -1 day'),
         ('dd(months=-1, days=1)', '-1 month, 1 day'),
-        ('dd(years=1, months=1, days=-1)', '1 year, 1 month, -1 day'),
-        ('dd(years=1, months=-1, days=1)', '1 year, -1 month, 1 day'),
-        ('dd(years=-1, months=1, days=1)', '-1 year, 1 month, 1 day'),
-        ('dd(years=1, months=-1, days=-1)', '1 year, -1 month, -1 day'),
-        ('dd(years=-1, months=1, days=-1)', '-1 year, 1 month, -1 day'),
-        ('dd(years=-1, months=-1, days=1)', '-1 year, -1 month, 1 day'),
+        ('dd(weeks=1, days=-1)', '1 week, -1 day'),
+        ('dd(weeks=-1, days=1)', '-1 week, 1 day'),
+        ('dd(years=1, months=1, weeks=1, days=-1)', '1 year, 1 month, 1 week, -1 day'),
+        ('dd(years=1, months=1, weeks=-1, days=1)', '1 year, 1 month, -1 week, 1 day'),
+        ('dd(years=1, months=1, weeks=-1, days=-1)', '1 year, 1 month, -1 week, -1 day'),
+        ('dd(years=1, months=-1, weeks=1, days=1)', '1 year, -1 month, 1 week, 1 day'),
+        ('dd(years=1, months=-1, weeks=1, days=-1)', '1 year, -1 month, 1 week, -1 day'),
+        ('dd(years=1, months=-1, weeks=-1, days=1)', '1 year, -1 month, -1 week, 1 day'),
+        ('dd(years=1, months=-1, weeks=-1, days=-1)', '1 year, -1 month, -1 week, -1 day'),
+        ('dd(years=-1, months=1, weeks=1, days=1)', '-1 year, 1 month, 1 week, 1 day'),
+        ('dd(years=-1, months=1, weeks=1, days=-1)', '-1 year, 1 month, 1 week, -1 day'),
+        ('dd(years=-1, months=1, weeks=-1, days=1)', '-1 year, 1 month, -1 week, 1 day'),
+        ('dd(years=-1, months=1, weeks=-1, days=-1)', '-1 year, 1 month, -1 week, -1 day'),
+        ('dd(years=-1, months=-1, weeks=1, days=1)', '-1 year, -1 month, 1 week, 1 day'),
+        ('dd(years=-1, months=-1, weeks=1, days=-1)', '-1 year, -1 month, 1 week, -1 day'),
+        ('dd(years=-1, months=-1, weeks=-1, days=1)', '-1 year, -1 month, -1 week, 1 day'),
         # Positive plural values.
         ('dd(years=2)', '2 years'),
         ('dd(months=3)', '3 months'),
+        ('dd(weeks=4)', '4 weeks'),
         ('dd(days=6)', '6 days'),
         ('dd(years=2, months=3)', '2 years, 3 months'),
+        ('dd(years=2, weeks=4)', '2 years, 4 weeks'),
         ('dd(years=2, days=6)', '2 years, 6 days'),
+        ('dd(months=3, weeks=4)', '3 months, 4 weeks'),
         ('dd(months=3, days=6)', '3 months, 6 days'),
-        ('dd(years=2, months=3, days=6)', '2 years, 3 months, 6 days'),
+        ('dd(weeks=4, days=6)', '4 weeks, 6 days'),
+        ('dd(years=2, months=3, weeks=4, days=6)', '2 years, 3 months, 4 weeks, 6 days'),
         # Negative plural values.
         ('dd(years=-2)', '-2 years'),
         ('dd(months=-3)', '-3 months'),
+        ('dd(weeks=-4)', '-4 weeks'),
         ('dd(days=-6)', '-6 days'),
         ('dd(years=-2, months=-3)', '-2 years, -3 months'),
+        ('dd(years=-2, weeks=-4)', '-2 years, -4 weeks'),
         ('dd(years=-2, days=-6)', '-2 years, -6 days'),
+        ('dd(months=-3, weeks=-4)', '-3 months, -4 weeks'),
         ('dd(months=-3, days=-6)', '-3 months, -6 days'),
-        ('dd(years=-2, months=-3, days=-6)', '-2 years, -3 months, -6 days'),
+        ('dd(weeks=-4, days=-6)', '-4 weeks, -6 days'),
+        ('dd(years=-2, months=-3, weeks=-4, days=-6)', '-2 years, -3 months, -4 weeks, -6 days'),
         # Mixed plural values.
         ('dd(years=2, months=-3)', '2 years, -3 months'),
         ('dd(years=-2, months=3)', '-2 years, 3 months'),
+        ('dd(years=2, weeks=-4)', '2 years, -4 weeks'),
+        ('dd(years=-2, weeks=4)', '-2 years, 4 weeks'),
         ('dd(years=2, days=-6)', '2 years, -6 days'),
         ('dd(years=-2, days=6)', '-2 years, 6 days'),
+        ('dd(months=3, weeks=-4)', '3 months, -4 weeks'),
+        ('dd(months=-3, weeks=4)', '-3 months, 4 weels'),
         ('dd(months=3, days=-6)', '3 months, -6 days'),
         ('dd(months=-3, days=6)', '-3 months, 6 days'),
-        ('dd(years=2, months=3, days=-6)', '2 years, 3 months, -6 days'),
-        ('dd(years=2, months=-3, days=6)', '2 years, -3 months, 6 days'),
-        ('dd(years=-2, months=3, days=6)', '-2 years, 3 months, 6 days'),
-        ('dd(years=2, months=-3, days=-6)', '2 years, -3 months, -6 days'),
-        ('dd(years=-2, months=3, days=-6)', '-2 years, 3 months, -6 days'),
-        ('dd(years=-2, months=-3, days=6)', '-2 years, -3 months, 6 days'),
+        ('dd(weeks=4, days=-6)', '4 weeks, -6 days'),
+        ('dd(weeks=-4, days=6)', '-4 weeks, 6 days'),
+        ('dd(years=2, months=3, weeks=4, days=-6)', '2 years, 3 months, 4 weeks, -6 days'),
+        ('dd(years=2, months=3, weeks=-4, days=6)', '2 years, 3 months, -4 weeks, 6 days'),
+        ('dd(years=2, months=3, weeks=-4, days=-6)', '2 years, 3 months, -4 weeks, -6 days'),
+        ('dd(years=2, months=-3, weeks=4, days=6)', '2 years, -3 months, 4 weeks, 6 days'),
+        ('dd(years=2, months=-3, weeks=4, days=-6)', '2 years, -3 months, 4 weeks, -6 days'),
+        ('dd(years=2, months=-3, weeks=-4, days=6)', '2 years, -3 months, -4 weeks, 6 days'),
+        ('dd(years=2, months=-3, weeks=-4, days=-6)', '2 years, -3 months, -4 weeks, -6 days'),
+        ('dd(years=-2, months=3, weeks=4, days=6)', '2 years, 3 months, 4 weeks, 6 days'),
+        ('dd(years=-2, months=3, weeks=4, days=-6)', '2 years, 3 months, 4 weeks, -6 days'),
+        ('dd(years=-2, months=3, weeks=-4, days=6)', '2 years, 3 months, -4 weeks, 6 days'),
+        ('dd(years=-2, months=3, weeks=-4, days=-6)', '2 years, 3 months, -4 weeks, -6 days'),
+        ('dd(years=-2, months=-3, weeks=4, days=6)', '2 years, -3 months, 4 weeks, 6 days'),
+        ('dd(years=-2, months=-3, weeks=4, days=-6)', '2 years, -3 months, 4 weeks, -6 days'),
+        ('dd(years=-2, months=-3, weeks=-4, days=6)', '2 years, -3 months, -4 weeks, 6 days'),
         # Mixed singular and plural values (not all combinations are included).
         ('dd(years=-1, months=1, days=10)', '-1 year, 1 month, 10 days'),
         ('dd(months=2, days=-1)', '2 months, -1 day'),
         ('dd(months=-1, days=10)', '-1 month, 10 days'),
+        ('dd(weeks=3, days=-1)', '3 weeks, -1 day'),
+        ('dd(years=1, weeks=-4)', '1 year, -4 weeks'),
     ],
 )
 def test_repr_and_str(delta_repr, delta_str):
