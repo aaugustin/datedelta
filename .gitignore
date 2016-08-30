@@ -1,8 +1,8 @@
-*.pyc
-build
-dist
 *.egg-info
-MANIFEST
-README
+*.pyc
 .cache
 .tox
+build
+dist
+MANIFEST
+*.pyc
