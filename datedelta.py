@@ -3,22 +3,26 @@ import datetime
 
 class datedelta:
 
-    __slots__ = ['_years', '_months', '_days']
+    __slots__ = ['_years', '_months', '_weeks', '_days']
 
-    def __init__(self, *, years=0, months=0, days=0):
+    def __init__(self, *, years=0, months=0, weeks=0, days=0):
         int_years = int(years)
         int_months = int(months)
+        int_weeks = int(weeks)
         int_days = int(days)
 
         if int_years != years:
             raise ValueError("years must be an integer value")
         if int_months != months:
             raise ValueError("months must be an integer value")
+        if int_weeks != weeks:
+            raise ValueError("weeks must be an integer value")
         if int_days != days:
             raise ValueError("days must be an integer value")
 
         self._years = int_years
         self._months = int_months
+        self._weeks = int_weeks
         self._days = int_days
 
     # datedelta must be immutable to be hashable.
@@ -32,6 +36,10 @@ class datedelta:
         return self._months
 
     @property
+    def weeks(self):
+        return self._weeks
+
+    @property
     def days(self):
         return self._days
 
@@ -41,6 +49,8 @@ class datedelta:
             args.append('years={}'.format(self._years))
         if self._months != 0:
             args.append('months={}'.format(self._months))
+        if self._weeks != 0:
+            args.append('weeks={}'.format(self._weeks))
         if self._days != 0:
             args.append('days={}'.format(self._days))
         return 'datedelta.datedelta({})'.format(', '.join(args))
@@ -51,6 +61,8 @@ class datedelta:
             bits.append('{} year{}'.format(self._years, _s(self._years)))
         if self._months != 0:
             bits.append('{} month{}'.format(self._months, _s(self._months)))
+        if self._weeks != 0:
+            bits.append('{} week{}'.format(self._weeks, _s(self._weeks)))
         if self._days != 0:
             bits.append('{} day{}'.format(self._days, _s(self._days)))
         return ', '.join(bits) or '0 days'
@@ -59,6 +71,7 @@ class datedelta:
         if isinstance(other, datedelta):
             return (self._years == other._years and
                     self._months == other._months and
+                    self._weeks == other._weeks and
                     self._days == other._days)
 
         return NotImplemented
@@ -67,23 +80,26 @@ class datedelta:
         if isinstance(other, datedelta):
             return (self._years != other._years or
                     self._months != other._months or
+                    self._weeks != other._weeks or
                     self._days != other._days)
 
         return NotImplemented
 
     def __hash__(self):
-        return (self._years << 16) + (self._months << 8) + self._days
+        return (self._years << 24) + (self._months << 16) + (self._weeks << 8) + self._days
 
     def __add__(self, other):
         if isinstance(other, datedelta):
             if (
                 self._years * other._years >= 0 and
                 self._months * other._months >= 0 and
+                self._weeks * other._weeks >= 0 and
                 self._days * other._days >= 0
             ):
                 return self.__class__(
                     years=self._years + other._years,
                     months=self._months + other._months,
+                    weeks=self._weeks + other._weeks,
                     days=self._days + other._days,
                 )
             else:
@@ -96,11 +112,13 @@ class datedelta:
             if (
                 self._years * other._years <= 0 and
                 self._months * other._months <= 0 and
+                self._weeks * other._weeks <= 0 and
                 self._days * other._days <= 0
             ):
                 return self.__class__(
                     years=self._years - other._years,
                     months=self._months - other._months,
+                    weeks=self._weeks - other._weeks,
                     days=self._days - other._days,
                 )
             else:
@@ -113,6 +131,7 @@ class datedelta:
             return self.__class__(
                 years=self._years * other,
                 months=self._months * other,
+                weeks=self._weeks * other,
                 days=self._days * other,
             )
 
@@ -151,6 +170,10 @@ class datedelta:
                     day = 1
 
             result = other.replace(year, month, day)
+
+            # Add weeks.
+            if self._weeks:
+                result += datetime.timedelta(days=7*self._weeks)
 
             # Add days.
             if self._days:
@@ -194,6 +217,9 @@ class datedelta:
 
             result = other.replace(year, month, day)
 
+            if self._weeks:
+                result -= datetime.timedelta(days=7*self._weeks)
+
             # Subtract days.
             if self._days:
                 result -= datetime.timedelta(days=self._days)
@@ -208,6 +234,7 @@ class datedelta:
         return self.__class__(
             years=-self._years,
             months=-self._months,
+            weeks=-self._weeks,
             days=-self._days,
         )
 
@@ -220,6 +247,8 @@ class datedelta:
 YEAR = datedelta(years=1)
 
 MONTH = datedelta(months=1)
+
+WEEK = datedelta(weeks=1)
 
 DAY = datedelta(days=1)
 
