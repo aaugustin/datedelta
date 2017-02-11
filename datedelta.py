@@ -214,6 +214,14 @@ class datedelta:
     def __pos__(self):
         return self
 
+    # Optimize pickling.
+
+    def __getstate__(self):
+        return self._years, self._months, self._days
+
+    def __setstate__(self, state):
+        self._years, self._months, self._days = state
+
 
 # Public constants for convenience.
 

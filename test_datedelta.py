@@ -1,5 +1,6 @@
 # For convenience and readability in tests, use short aliases.
 
+import pickle
 from datetime import date as d
 from datetime import timedelta as td
 
@@ -200,6 +201,27 @@ def test_equal_not_equal_and_hash(delta_1, delta_2, is_equal):
         # Technically, hashes could be equal even if values are different, but
         # that case doesn't happen in the current implementation.
         assert (hash(delta_1) == hash(delta_2)) == is_equal
+
+
+@pytest.mark.parametrize(
+    ('delta'),
+    [
+        # Same type.
+        (dd()),
+        (dd(years=2)),
+        (dd(months=3)),
+        (dd(days=6)),
+        (dd(years=2, months=3)),
+        (dd(months=3, days=6)),
+        (dd(years=2, months=3, days=6)),
+    ],
+)
+def test_pickle_unpickle(delta):
+    pickled = pickle.dumps(delta)
+    assert len(pickled) <= 40
+
+    unpickled = pickle.loads(pickled)
+    assert unpickled == delta
 
 
 @pytest.mark.parametrize(
