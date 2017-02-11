@@ -268,6 +268,11 @@ there's little to gain by switching to ``datedelta``.
 Changelog
 =========
 
+1.2
+---
+
+* Optimize hashing and pickling.
+
 1.1
 ---
 
