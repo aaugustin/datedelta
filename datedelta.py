@@ -72,7 +72,7 @@ class datedelta:
         return NotImplemented
 
     def __hash__(self):
-        return (self._years << 16) + (self._months << 8) + self._days
+        return hash((self._years, self._months, self._days))
 
     def __add__(self, other):
         if isinstance(other, datedelta):
