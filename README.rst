@@ -8,6 +8,31 @@ Gregorian calendar. It can also subtract years, months, or days from dates.
 
 Typically, it's useful to compute yearly or monthly subscriptions periods.
 
+Behavior
+========
+
+There are two date arithmetic traps in the Gregorian calendar:
+
+1. Leap years. Problems arise when adding years to a February 29th gives a
+   result in a non-leap year.
+
+2. Variable number of days in months. Problems arise when adding months to a
+   29th, 30th or 31st gives a result in a month where that day doesn't exist.
+
+In both cases, the result must be changed to the first day of the next month.
+
+This method gives consistent results provided periods are represented by
+(start date inclusive, end date exclusive) — that's [start date, end date) if
+you prefer the mathematical notation. This representation of periods is akin
+to 0-based indexing, which is the convention Python uses.
+
+For example, if someone subscribes for a year starting on 2016-02-29 inclusive,
+the end date must be 2017-03-01 exclusive. If it was 2016-02-28 exclusive, the
+subscription would be one day too short.
+
+Operations are always performed on years, then months, then days. This order
+usually provides the expected behavior. It also minimizes loss of precision.
+
 Installation
 ============
 
@@ -118,7 +143,7 @@ Arbitrary intervals
     datetime.date(2016, 8, 29)
 
 These results may appear slightly surprising. However, they're consistent, for
-reasons explained in the "Behavior" section below.
+reasons explained in the "Behavior" section above.
 
 Other operations
 ----------------
@@ -154,35 +179,10 @@ two ``datedelta`` isn't well defined, that operation raises ``ValueError``.
         ...
     ValueError: cannot add datedeltas with opposite signs
 
-Behavior
-========
-
-There are two date arithmetic traps in the Gregorian calendar:
-
-1. Leap years. Problems arise when adding years to a February 29th gives a
-   result in a non-leap year.
-
-2. Variable number of days in months. Problems arise when adding months to a
-   29th, 30th or 31st gives a result in a month where that day doesn't exist.
-
-In both cases, the result must be changed to the first day of the next month.
-
-This method gives consistent results provided periods are represented by
-(start date inclusive, end date exclusive) — that's [start date, end date) if
-you prefer the mathematical notation. This representation of periods is akin
-to 0-based indexing, which is the convention Python uses.
-
-For example, if someone subscribes for a year starting on 2016-02-29 inclusive,
-the end date must be 2017-03-01 exclusive. If it was 2016-02-28 exclusive, the
-subscription would be one day too short.
-
-Operations are always performed on years, then months, then days. This order
-usually provides the expected behavior. It also minimizes loss of precision.
-
 Limitations
 ===========
 
-Additions involving ``datedelta`` are neither associative not commutative in
+Additions involving ``datedelta`` are neither associative nor commutative in
 general.
 
 Here are two examples where adding a ``datedelta`` then subtracting it doesn't
