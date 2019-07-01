@@ -25,21 +25,21 @@ def test_years_must_be_integer():
     with pytest.raises(ValueError) as exc:
         dd(years=4.5)
 
-    assert "years must be an integer value" in str(exc)
+    assert "years must be an integer value" in str(exc.value)
 
 
 def test_months_must_be_integer():
     with pytest.raises(ValueError) as exc:
         dd(months=6.5)
 
-    assert "months must be an integer value" in str(exc)
+    assert "months must be an integer value" in str(exc.value)
 
 
 def test_days_must_be_integer():
     with pytest.raises(ValueError) as exc:
         dd(days=8.5)
 
-    assert "days must be an integer value" in str(exc)
+    assert "days must be an integer value" in str(exc.value)
 
 
 def test_can_get_years_attribute():
@@ -264,7 +264,7 @@ def test_add_datedelta(delta_1, delta_2, delta):
 def test_add_unsupported_datedelta(delta_1, delta_2):
     with pytest.raises(ValueError) as exc:
         delta_1 + delta_2
-    assert "cannot add datedeltas with opposite signs" in str(exc)
+    assert "cannot add datedeltas with opposite signs" in str(exc.value)
 
 
 @pytest.mark.parametrize(
@@ -281,7 +281,7 @@ def test_add_unsupported_datedelta(delta_1, delta_2):
 def test_add_unsupported_type(delta_1, other):
     with pytest.raises(TypeError) as exc:
         delta_1 + other
-    assert "unsupported operand type(s) for +" in str(exc)
+    assert "unsupported operand type(s) for +" in str(exc.value)
 
 
 @pytest.mark.parametrize(
@@ -324,7 +324,7 @@ def test_subtract_datedelta(delta_1, delta_2, delta):
 def test_subtract_unsupported_datedelta(delta_1, delta_2):
     with pytest.raises(ValueError) as exc:
         delta_1 - delta_2
-    assert "cannot subtract datedeltas with same signs" in str(exc)
+    assert "cannot subtract datedeltas with same signs" in str(exc.value)
 
 
 @pytest.mark.parametrize(
