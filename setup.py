@@ -11,7 +11,7 @@ with open(os.path.join(root_dir, 'README.rst')) as f:
 
 setuptools.setup(
     name='datedelta',
-    version='1.2',
+    version='1.3',
     description=description,
     long_description=long_description,
     url='https://github.com/aaugustin/datedelta',
