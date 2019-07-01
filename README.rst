@@ -3,10 +3,12 @@ datedelta
 
 ``datedelta.datedelta`` is ``datetime.timedelta`` for date arithmetic.
 
-It can add years, months, or days to dates while accounting for oddities of the
-Gregorian calendar. It can also subtract years, months, or days from dates.
+It can add years, months, weeks, or days to dates while accounting for
+oddities of the Gregorian calendar. It can also subtract years, months, weeks,
+or days from dates.
 
-Typically, it's useful to compute yearly or monthly subscriptions periods.
+Typically, it's useful to compute yearly, monthly, or weekly subscriptions
+periods.
 
 Behavior
 ========
@@ -80,6 +82,12 @@ calculations with little code.
 
     >>> datetime.date(2016, 3, 1) - datedelta.MONTH
     datetime.date(2016, 2, 1)
+
+    >>> datetime.date(2016, 1, 1) + datedelta.WEEK
+    datetime.date(2016, 1, 8)
+
+    >>> datetime.date(2016, 1, 1) - datedelta.WEEK
+    datetime.date(2015, 12, 25)
 
     >>> datetime.date(2016, 1, 1) + datedelta.DAY
     datetime.date(2016, 1, 2)
@@ -267,6 +275,11 @@ there's little to gain by switching to ``datedelta``.
 
 Changelog
 =========
+
+1.3
+---
+
+* Add ``WEEK`` constant.
 
 1.2
 ---

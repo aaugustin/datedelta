@@ -6,13 +6,14 @@ from datetime import timedelta as td
 
 import pytest
 from datedelta import datedelta as dd
-from datedelta import DAY, MONTH, YEAR
+from datedelta import DAY, MONTH, WEEK, YEAR
 
 
 @pytest.mark.parametrize(
     ('constant', 'value'),
     [
         (DAY, dd(days=1)),
+        (WEEK, dd(days=7)),
         (MONTH, dd(months=1)),
         (YEAR, dd(years=1)),
     ],

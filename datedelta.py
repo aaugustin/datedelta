@@ -229,6 +229,8 @@ YEAR = datedelta(years=1)
 
 MONTH = datedelta(months=1)
 
+WEEK = datedelta(days=7)
+
 DAY = datedelta(days=1)
 
 
