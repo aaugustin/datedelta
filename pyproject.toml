@@ -1,0 +1,26 @@
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.coverage.run]
+branch = true
+
+[tool.poetry]
+name = "datedelta"
+version = "1.3"
+description = "Like datetime.timedelta, for date arithmetic."
+license = "BSD-3-Clause"
+authors = ["Aymeric Augustin <aymeric.augustin@m4x.org>"]
+readme = "README.rst"
+repository = "https://github.com/aaugustin/datedelta"
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "Operating System :: OS Independent",
+]
+
+[tool.poetry.dependencies]
+python = "^3.4"
+
+[tool.poetry.dev-dependencies]
+pytest = "*"
