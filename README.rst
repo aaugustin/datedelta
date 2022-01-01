@@ -109,7 +109,7 @@ subtracting a ``datedelta`` from a ``date``.
 Basic intervals
 ---------------
 
-The ``YEAR``, ``MONTH``, and ``DAY`` constants allow expressing common
+The ``YEAR``, ``MONTH``, ``WEEK``, and ``DAY`` constants support common
 calculations with little code.
 
 .. code-block:: pycon
@@ -214,7 +214,7 @@ Other operations
 ----------------
 
 ``datedelta`` instances can be added, subtracted, and multiplied with an
-integer. However there are some restrictions on addition and subtraction.
+integer. However, there are some restrictions on addition and subtraction.
 
 Adding then subtracting a given datedelta to a date doesn't always return the
 original date. In order to prevent bugs caused by this behavior, when the result
@@ -309,22 +309,19 @@ Alternatives
 ``datedelta.datedelta`` is smarter than ``datetime.timedelta`` because it knows
 about years and months in addition to days.
 
-``datedelta.datedelta`` provides a subset of the features found in
-``dateutil.relativedelta``. Not only does it only support dates, but:
+Compared to ``pendulum.Duration`` or ``dateutil.relativedelta.relativedelta``,
+``datedelta.datedelta`` has a few benefits:
 
-* It omits the "replace" behavior which is very error-prone.
-* It doesn't allow explicit control of leapdays.
-* It uses keyword-only arguments.
-
-Handling leap days automatically reduces the number of choices the programmer
-must make and thus the number of errors they can make.
-
-Note that ``datedelta.datedelta`` adjusts non-existing days to the first day of
-the next month while ``dateutil.relativedelta`` adjusts them to the last day of
-the current month.
-
-If you're comfortable with ``dateutil`` and don't mind its larger footprint,
-there's little to gain by switching to ``datedelta``.
+* It handles non-existing results in a mathematically consistent fashion: it
+  adjusts to the first day of the next month while pendulum and dateutil adjust
+  to the last day of the current month.
+* It provides an API designed to prevent programming mistakes: it requires
+  keyword arguments, rejects operations expressing incorrect business logic, and
+  omits error-prone features of dateutil like the "replace" behavior or explicit
+  control of leap days.
+* It has very small footprint, by virtue of providing of very small subset of
+  the features found in pendulum or dateutil. That makes it a good choice if
+  you're otherwise happy with the standard library's datetime module.
 
 Changelog
 =========
