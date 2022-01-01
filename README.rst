@@ -258,7 +258,6 @@ about years and months in addition to days.
 * It omits the "replace" behavior which is very error-prone.
 * It doesn't allow explicit control of leapdays.
 * It uses keyword-only arguments.
-* It requires Python 3.
 
 Handling leap days automatically reduces the number of choices the programmer
 must make and thus the number of errors they can make.
@@ -266,9 +265,6 @@ must make and thus the number of errors they can make.
 Note that ``datedelta.datedelta`` adjusts non-existing days to the first day of
 the next month while ``dateutil.relativedelta`` adjusts them to the last day of
 the current month.
-
-If you're stuck with Python 2, just copy the code, make ``datedelta`` inherit
-from ``object``, and remove the ``*`` in the signature of ``__init__``.
 
 If you're comfortable with ``dateutil`` and don't mind its larger footprint,
 there's little to gain by switching to ``datedelta``.
