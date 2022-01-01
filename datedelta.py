@@ -3,7 +3,7 @@ import datetime
 
 class datedelta:
 
-    __slots__ = ['_years', '_months', '_days']
+    __slots__ = ["_years", "_months", "_days"]
 
     def __init__(self, *, years=0, months=0, days=0):
         int_years = int(years)
@@ -38,36 +38,40 @@ class datedelta:
     def __repr__(self):
         args = []
         if self._years != 0:
-            args.append('years={}'.format(self._years))
+            args.append("years={}".format(self._years))
         if self._months != 0:
-            args.append('months={}'.format(self._months))
+            args.append("months={}".format(self._months))
         if self._days != 0:
-            args.append('days={}'.format(self._days))
-        return 'datedelta.datedelta({})'.format(', '.join(args))
+            args.append("days={}".format(self._days))
+        return "datedelta.datedelta({})".format(", ".join(args))
 
     def __str__(self):
         bits = []
         if self._years != 0:
-            bits.append('{} year{}'.format(self._years, _s(self._years)))
+            bits.append("{} year{}".format(self._years, _s(self._years)))
         if self._months != 0:
-            bits.append('{} month{}'.format(self._months, _s(self._months)))
+            bits.append("{} month{}".format(self._months, _s(self._months)))
         if self._days != 0:
-            bits.append('{} day{}'.format(self._days, _s(self._days)))
-        return ', '.join(bits) or '0 days'
+            bits.append("{} day{}".format(self._days, _s(self._days)))
+        return ", ".join(bits) or "0 days"
 
     def __eq__(self, other):
         if isinstance(other, datedelta):
-            return (self._years == other._years and
-                    self._months == other._months and
-                    self._days == other._days)
+            return (
+                self._years == other._years
+                and self._months == other._months
+                and self._days == other._days
+            )
 
         return NotImplemented
 
     def __ne__(self, other):
         if isinstance(other, datedelta):
-            return (self._years != other._years or
-                    self._months != other._months or
-                    self._days != other._days)
+            return (
+                self._years != other._years
+                or self._months != other._months
+                or self._days != other._days
+            )
 
         return NotImplemented
 
@@ -77,9 +81,9 @@ class datedelta:
     def __add__(self, other):
         if isinstance(other, datedelta):
             if (
-                self._years * other._years >= 0 and
-                self._months * other._months >= 0 and
-                self._days * other._days >= 0
+                self._years * other._years >= 0
+                and self._months * other._months >= 0
+                and self._days * other._days >= 0
             ):
                 return self.__class__(
                     years=self._years + other._years,
@@ -94,9 +98,9 @@ class datedelta:
     def __sub__(self, other):
         if isinstance(other, datedelta):
             if (
-                self._years * other._years <= 0 and
-                self._months * other._months <= 0 and
-                self._days * other._days <= 0
+                self._years * other._years <= 0
+                and self._months * other._months <= 0
+                and self._days * other._days <= 0
             ):
                 return self.__class__(
                     years=self._years - other._years,
@@ -241,7 +245,6 @@ _DAYS_IN_MONTH = [None, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
 
 def _days_in_month(year, month):
     assert 1 <= month <= 12
-
     # Inline definition of calendar.isleap(year) for clarity and performance.
     if month == 2 and (year % 4 == 0 and (year % 100 != 0 or year % 400 == 0)):
         return 29
@@ -249,4 +252,4 @@ def _days_in_month(year, month):
 
 
 def _s(value):
-    return '' if abs(value) == 1 else 's'
+    return "" if abs(value) == 1 else "s"

@@ -10,7 +10,7 @@ from datedelta import DAY, MONTH, WEEK, YEAR
 
 
 @pytest.mark.parametrize(
-    ('constant', 'value'),
+    ("constant", "value"),
     [
         (DAY, dd(days=1)),
         (WEEK, dd(days=7)),
@@ -92,83 +92,83 @@ def test_cannot_delete_days_attribute():
 
 
 @pytest.mark.parametrize(
-    ('delta_repr', 'delta_str'),
+    ("delta_repr", "delta_str"),
     [
         # No values.
-        ('dd()', '0 days'),
+        ("dd()", "0 days"),
         # Positive singular values.
-        ('dd(years=1)', '1 year'),
-        ('dd(months=1)', '1 month'),
-        ('dd(days=1)', '1 day'),
-        ('dd(years=1, months=1)', '1 year, 1 month'),
-        ('dd(years=1, days=1)', '1 year, 1 day'),
-        ('dd(months=1, days=1)', '1 month, 1 day'),
-        ('dd(years=1, months=1, days=1)', '1 year, 1 month, 1 day'),
+        ("dd(years=1)", "1 year"),
+        ("dd(months=1)", "1 month"),
+        ("dd(days=1)", "1 day"),
+        ("dd(years=1, months=1)", "1 year, 1 month"),
+        ("dd(years=1, days=1)", "1 year, 1 day"),
+        ("dd(months=1, days=1)", "1 month, 1 day"),
+        ("dd(years=1, months=1, days=1)", "1 year, 1 month, 1 day"),
         # Negative singular values.
-        ('dd(years=-1)', '-1 year'),
-        ('dd(months=-1)', '-1 month'),
-        ('dd(days=-1)', '-1 day'),
-        ('dd(years=-1, months=-1)', '-1 year, -1 month'),
-        ('dd(years=-1, days=-1)', '-1 year, -1 day'),
-        ('dd(months=-1, days=-1)', '-1 month, -1 day'),
-        ('dd(years=-1, months=-1, days=-1)', '-1 year, -1 month, -1 day'),
+        ("dd(years=-1)", "-1 year"),
+        ("dd(months=-1)", "-1 month"),
+        ("dd(days=-1)", "-1 day"),
+        ("dd(years=-1, months=-1)", "-1 year, -1 month"),
+        ("dd(years=-1, days=-1)", "-1 year, -1 day"),
+        ("dd(months=-1, days=-1)", "-1 month, -1 day"),
+        ("dd(years=-1, months=-1, days=-1)", "-1 year, -1 month, -1 day"),
         # Mixed singular values.
-        ('dd(years=1, months=-1)', '1 year, -1 month'),
-        ('dd(years=-1, months=1)', '-1 year, 1 month'),
-        ('dd(years=1, days=-1)', '1 year, -1 day'),
-        ('dd(years=-1, days=1)', '-1 year, 1 day'),
-        ('dd(months=1, days=-1)', '1 month, -1 day'),
-        ('dd(months=-1, days=1)', '-1 month, 1 day'),
-        ('dd(years=1, months=1, days=-1)', '1 year, 1 month, -1 day'),
-        ('dd(years=1, months=-1, days=1)', '1 year, -1 month, 1 day'),
-        ('dd(years=-1, months=1, days=1)', '-1 year, 1 month, 1 day'),
-        ('dd(years=1, months=-1, days=-1)', '1 year, -1 month, -1 day'),
-        ('dd(years=-1, months=1, days=-1)', '-1 year, 1 month, -1 day'),
-        ('dd(years=-1, months=-1, days=1)', '-1 year, -1 month, 1 day'),
+        ("dd(years=1, months=-1)", "1 year, -1 month"),
+        ("dd(years=-1, months=1)", "-1 year, 1 month"),
+        ("dd(years=1, days=-1)", "1 year, -1 day"),
+        ("dd(years=-1, days=1)", "-1 year, 1 day"),
+        ("dd(months=1, days=-1)", "1 month, -1 day"),
+        ("dd(months=-1, days=1)", "-1 month, 1 day"),
+        ("dd(years=1, months=1, days=-1)", "1 year, 1 month, -1 day"),
+        ("dd(years=1, months=-1, days=1)", "1 year, -1 month, 1 day"),
+        ("dd(years=-1, months=1, days=1)", "-1 year, 1 month, 1 day"),
+        ("dd(years=1, months=-1, days=-1)", "1 year, -1 month, -1 day"),
+        ("dd(years=-1, months=1, days=-1)", "-1 year, 1 month, -1 day"),
+        ("dd(years=-1, months=-1, days=1)", "-1 year, -1 month, 1 day"),
         # Positive plural values.
-        ('dd(years=2)', '2 years'),
-        ('dd(months=3)', '3 months'),
-        ('dd(days=6)', '6 days'),
-        ('dd(years=2, months=3)', '2 years, 3 months'),
-        ('dd(years=2, days=6)', '2 years, 6 days'),
-        ('dd(months=3, days=6)', '3 months, 6 days'),
-        ('dd(years=2, months=3, days=6)', '2 years, 3 months, 6 days'),
+        ("dd(years=2)", "2 years"),
+        ("dd(months=3)", "3 months"),
+        ("dd(days=6)", "6 days"),
+        ("dd(years=2, months=3)", "2 years, 3 months"),
+        ("dd(years=2, days=6)", "2 years, 6 days"),
+        ("dd(months=3, days=6)", "3 months, 6 days"),
+        ("dd(years=2, months=3, days=6)", "2 years, 3 months, 6 days"),
         # Negative plural values.
-        ('dd(years=-2)', '-2 years'),
-        ('dd(months=-3)', '-3 months'),
-        ('dd(days=-6)', '-6 days'),
-        ('dd(years=-2, months=-3)', '-2 years, -3 months'),
-        ('dd(years=-2, days=-6)', '-2 years, -6 days'),
-        ('dd(months=-3, days=-6)', '-3 months, -6 days'),
-        ('dd(years=-2, months=-3, days=-6)', '-2 years, -3 months, -6 days'),
+        ("dd(years=-2)", "-2 years"),
+        ("dd(months=-3)", "-3 months"),
+        ("dd(days=-6)", "-6 days"),
+        ("dd(years=-2, months=-3)", "-2 years, -3 months"),
+        ("dd(years=-2, days=-6)", "-2 years, -6 days"),
+        ("dd(months=-3, days=-6)", "-3 months, -6 days"),
+        ("dd(years=-2, months=-3, days=-6)", "-2 years, -3 months, -6 days"),
         # Mixed plural values.
-        ('dd(years=2, months=-3)', '2 years, -3 months'),
-        ('dd(years=-2, months=3)', '-2 years, 3 months'),
-        ('dd(years=2, days=-6)', '2 years, -6 days'),
-        ('dd(years=-2, days=6)', '-2 years, 6 days'),
-        ('dd(months=3, days=-6)', '3 months, -6 days'),
-        ('dd(months=-3, days=6)', '-3 months, 6 days'),
-        ('dd(years=2, months=3, days=-6)', '2 years, 3 months, -6 days'),
-        ('dd(years=2, months=-3, days=6)', '2 years, -3 months, 6 days'),
-        ('dd(years=-2, months=3, days=6)', '-2 years, 3 months, 6 days'),
-        ('dd(years=2, months=-3, days=-6)', '2 years, -3 months, -6 days'),
-        ('dd(years=-2, months=3, days=-6)', '-2 years, 3 months, -6 days'),
-        ('dd(years=-2, months=-3, days=6)', '-2 years, -3 months, 6 days'),
+        ("dd(years=2, months=-3)", "2 years, -3 months"),
+        ("dd(years=-2, months=3)", "-2 years, 3 months"),
+        ("dd(years=2, days=-6)", "2 years, -6 days"),
+        ("dd(years=-2, days=6)", "-2 years, 6 days"),
+        ("dd(months=3, days=-6)", "3 months, -6 days"),
+        ("dd(months=-3, days=6)", "-3 months, 6 days"),
+        ("dd(years=2, months=3, days=-6)", "2 years, 3 months, -6 days"),
+        ("dd(years=2, months=-3, days=6)", "2 years, -3 months, 6 days"),
+        ("dd(years=-2, months=3, days=6)", "-2 years, 3 months, 6 days"),
+        ("dd(years=2, months=-3, days=-6)", "2 years, -3 months, -6 days"),
+        ("dd(years=-2, months=3, days=-6)", "-2 years, 3 months, -6 days"),
+        ("dd(years=-2, months=-3, days=6)", "-2 years, -3 months, 6 days"),
         # Mixed singular and plural values (not all combinations are included).
-        ('dd(years=-1, months=1, days=10)', '-1 year, 1 month, 10 days'),
-        ('dd(months=2, days=-1)', '2 months, -1 day'),
-        ('dd(months=-1, days=10)', '-1 month, 10 days'),
+        ("dd(years=-1, months=1, days=10)", "-1 year, 1 month, 10 days"),
+        ("dd(months=2, days=-1)", "2 months, -1 day"),
+        ("dd(months=-1, days=10)", "-1 month, 10 days"),
     ],
 )
 def test_repr_and_str(delta_repr, delta_str):
-    delta = eval(delta_repr)            # repr must be evaluable
-    delta_repr = delta_repr.replace('dd', 'datedelta.datedelta')
-    assert repr(delta) == delta_repr    # repr must round-trip (on test cases)
+    delta = eval(delta_repr)  # repr must be evaluable
+    delta_repr = delta_repr.replace("dd", "datedelta.datedelta")
+    assert repr(delta) == delta_repr  # repr must round-trip (on test cases)
     assert str(delta) == delta_str
 
 
 @pytest.mark.parametrize(
-    ('delta_1', 'delta_2', 'is_equal'),
+    ("delta_1", "delta_2", "is_equal"),
     [
         # Same type.
         (dd(), dd(), True),
@@ -205,7 +205,7 @@ def test_equal_not_equal_and_hash(delta_1, delta_2, is_equal):
 
 
 @pytest.mark.parametrize(
-    ('delta'),
+    ("delta"),
     [
         # Same type.
         (dd()),
@@ -226,7 +226,7 @@ def test_pickle_unpickle(delta):
 
 
 @pytest.mark.parametrize(
-    ('delta_1', 'delta_2', 'delta'),
+    ("delta_1", "delta_2", "delta"),
     [
         (dd(), dd(), dd()),
         # Positive deltas.
@@ -235,32 +235,52 @@ def test_pickle_unpickle(delta):
         (dd(years=1), dd(years=1), dd(years=2)),
         (dd(years=2), dd(months=3, days=6), dd(years=2, months=3, days=6)),
         (dd(years=2, months=1), dd(months=2, days=6), dd(years=2, months=3, days=6)),
-        (dd(years=2, months=1, days=2), dd(months=2, days=4), dd(years=2, months=3, days=6)),
+        (
+            dd(years=2, months=1, days=2),
+            dd(months=2, days=4),
+            dd(years=2, months=3, days=6),
+        ),
         # Negative deltas.
         (dd(years=-2), dd(), dd(years=-2)),
         (dd(), dd(months=-3, days=-6), dd(months=-3, days=-6)),
         (dd(years=-1), dd(years=-1), dd(years=-2)),
         (dd(years=-2), dd(months=-3, days=-6), dd(years=-2, months=-3, days=-6)),
-        (dd(years=-2, months=-1), dd(months=-2, days=-6), dd(years=-2, months=-3, days=-6)),
-        (dd(years=-2, months=-1, days=-2), dd(months=-2, days=-4), dd(years=-2, months=-3, days=-6)),
+        (
+            dd(years=-2, months=-1),
+            dd(months=-2, days=-6),
+            dd(years=-2, months=-3, days=-6),
+        ),
+        (
+            dd(years=-2, months=-1, days=-2),
+            dd(months=-2, days=-4),
+            dd(years=-2, months=-3, days=-6),
+        ),
         # Supported mixed deltas.
         (dd(years=2), dd(months=-3, days=6), dd(years=2, months=-3, days=6)),
-        (dd(years=-2, months=1), dd(months=2, days=-6), dd(years=-2, months=3, days=-6)),
-        (dd(years=2, months=1, days=-2), dd(months=2, days=-4), dd(years=2, months=3, days=-6)),
-    ]
+        (
+            dd(years=-2, months=1),
+            dd(months=2, days=-6),
+            dd(years=-2, months=3, days=-6),
+        ),
+        (
+            dd(years=2, months=1, days=-2),
+            dd(months=2, days=-4),
+            dd(years=2, months=3, days=-6),
+        ),
+    ],
 )
 def test_add_datedelta(delta_1, delta_2, delta):
     assert delta_1 + delta_2 == delta
 
 
 @pytest.mark.parametrize(
-    ('delta_1', 'delta_2'),
+    ("delta_1", "delta_2"),
     [
         # Unsupported mixed deltas.
         (dd(years=3), dd(years=-1)),
         (dd(years=2, months=5), dd(months=-2, days=-6)),
         (dd(years=2, months=1, days=-10), dd(months=2, days=4)),
-    ]
+    ],
 )
 def test_add_unsupported_datedelta(delta_1, delta_2):
     with pytest.raises(ValueError) as exc:
@@ -269,15 +289,15 @@ def test_add_unsupported_datedelta(delta_1, delta_2):
 
 
 @pytest.mark.parametrize(
-    ('delta_1', 'other'),
+    ("delta_1", "other"),
     [
         # Other types.
         (dd(), None),
         (dd(), 0),
-        (dd(), 'a'),
+        (dd(), "a"),
         (dd(), []),
         (dd(), d.today()),
-    ]
+    ],
 )
 def test_add_unsupported_type(delta_1, other):
     with pytest.raises(TypeError) as exc:
@@ -286,7 +306,7 @@ def test_add_unsupported_type(delta_1, other):
 
 
 @pytest.mark.parametrize(
-    ('delta_1', 'delta_2', 'delta'),
+    ("delta_1", "delta_2", "delta"),
     [
         (dd(), dd(), dd()),
         # Positive deltas.
@@ -295,32 +315,52 @@ def test_add_unsupported_type(delta_1, other):
         (dd(years=1), dd(years=-1), dd(years=2)),
         (dd(years=2), dd(months=-3, days=-6), dd(years=2, months=3, days=6)),
         (dd(years=2, months=1), dd(months=-2, days=-6), dd(years=2, months=3, days=6)),
-        (dd(years=2, months=1, days=2), dd(months=-2, days=-4), dd(years=2, months=3, days=6)),
+        (
+            dd(years=2, months=1, days=2),
+            dd(months=-2, days=-4),
+            dd(years=2, months=3, days=6),
+        ),
         # Negative deltas.
         (dd(years=-2), dd(), dd(years=-2)),
         (dd(), dd(months=3, days=6), dd(months=-3, days=-6)),
         (dd(years=-1), dd(years=1), dd(years=-2)),
         (dd(years=-2), dd(months=3, days=6), dd(years=-2, months=-3, days=-6)),
-        (dd(years=-2, months=-1), dd(months=2, days=6), dd(years=-2, months=-3, days=-6)),
-        (dd(years=-2, months=-1, days=-2), dd(months=2, days=4), dd(years=-2, months=-3, days=-6)),
+        (
+            dd(years=-2, months=-1),
+            dd(months=2, days=6),
+            dd(years=-2, months=-3, days=-6),
+        ),
+        (
+            dd(years=-2, months=-1, days=-2),
+            dd(months=2, days=4),
+            dd(years=-2, months=-3, days=-6),
+        ),
         # Supported mixed deltas.
         (dd(years=2), dd(months=3, days=-6), dd(years=2, months=-3, days=6)),
-        (dd(years=-2, months=1), dd(months=-2, days=6), dd(years=-2, months=3, days=-6)),
-        (dd(years=2, months=1, days=-2), dd(months=-2, days=4), dd(years=2, months=3, days=-6)),
-    ]
+        (
+            dd(years=-2, months=1),
+            dd(months=-2, days=6),
+            dd(years=-2, months=3, days=-6),
+        ),
+        (
+            dd(years=2, months=1, days=-2),
+            dd(months=-2, days=4),
+            dd(years=2, months=3, days=-6),
+        ),
+    ],
 )
 def test_subtract_datedelta(delta_1, delta_2, delta):
     assert delta_1 - delta_2 == delta
 
 
 @pytest.mark.parametrize(
-    ('delta_1', 'delta_2'),
+    ("delta_1", "delta_2"),
     [
         # Unsupported mixed deltas.
         (dd(years=3), dd(years=1)),
         (dd(years=2, months=5), dd(months=2, days=6)),
         (dd(years=2, months=1, days=-10), dd(months=-2, days=-4)),
-    ]
+    ],
 )
 def test_subtract_unsupported_datedelta(delta_1, delta_2):
     with pytest.raises(ValueError) as exc:
@@ -329,7 +369,7 @@ def test_subtract_unsupported_datedelta(delta_1, delta_2):
 
 
 @pytest.mark.parametrize(
-    ('delta_1', 'count', 'delta'),
+    ("delta_1", "count", "delta"),
     [
         (dd(), 0, dd()),
         (dd(), 1, dd()),
@@ -343,7 +383,7 @@ def test_subtract_unsupported_datedelta(delta_1, delta_2):
         (dd(years=2, months=3, days=6), 1, dd(years=2, months=3, days=6)),
         (dd(years=2, months=3, days=6), 2, dd(years=4, months=6, days=12)),
         (dd(years=2, months=3, days=6), -1, dd(years=-2, months=-3, days=-6)),
-    ]
+    ],
 )
 def test_multiply_integer(delta_1, count, delta):
     assert delta_1 * count == delta
@@ -351,7 +391,7 @@ def test_multiply_integer(delta_1, count, delta):
 
 
 @pytest.mark.parametrize(
-    ('date_1', 'delta', 'date_2'),
+    ("date_1", "delta", "date_2"),
     [
         (d(2020, 1, 1), dd(), d(2020, 1, 1)),
         (d(2020, 2, 29), dd(), d(2020, 2, 29)),
@@ -389,14 +429,14 @@ def test_multiply_integer(delta_1, count, delta):
         (d(2021, 2, 28), dd(years=-1, days=10), d(2020, 3, 9)),
         (d(2021, 3, 1), dd(years=-1, days=10), d(2020, 3, 11)),
         (d(2021, 12, 31), dd(years=-1, days=10), d(2021, 1, 10)),
-    ]
+    ],
 )
 def test_add_datedelta_to_date(date_1, delta, date_2):
     assert date_1 + delta == date_2
 
 
 @pytest.mark.parametrize(
-    ('date_1', 'delta', 'date_2'),
+    ("date_1", "delta", "date_2"),
     [
         (d(2020, 1, 1), dd(), d(2020, 1, 1)),
         (d(2020, 2, 29), dd(), d(2020, 2, 29)),
@@ -434,14 +474,14 @@ def test_add_datedelta_to_date(date_1, delta, date_2):
         (d(2020, 2, 29), dd(years=-1, days=10), d(2021, 2, 19)),
         (d(2020, 3, 1), dd(years=-1, days=10), d(2021, 2, 19)),
         (d(2020, 12, 31), dd(years=-1, days=10), d(2021, 12, 21)),
-    ]
+    ],
 )
 def test_subtract_datedelta_from_date(date_1, delta, date_2):
     assert date_1 - delta == date_2
 
 
 @pytest.mark.parametrize(
-    ('delta', 'minus_delta'),
+    ("delta", "minus_delta"),
     [
         (dd(), dd()),
         (dd(years=2), dd(years=-2)),
@@ -451,14 +491,14 @@ def test_subtract_datedelta_from_date(date_1, delta, date_2):
         (dd(months=-3, days=-6), dd(months=3, days=6)),
         (dd(years=-2, months=-3, days=-6), dd(years=2, months=3, days=6)),
         (dd(years=2, months=-3, days=6), dd(years=-2, months=3, days=-6)),
-    ]
+    ],
 )
 def test_minus_datedelta(delta, minus_delta):
     assert -delta == minus_delta
 
 
 @pytest.mark.parametrize(
-    'delta',
+    "delta",
     [
         dd(),
         dd(years=2),
@@ -468,21 +508,21 @@ def test_minus_datedelta(delta, minus_delta):
         dd(months=-3, days=-6),
         dd(years=-2, months=-3, days=-6),
         dd(years=2, months=-3, days=6),
-    ]
+    ],
 )
 def test_plus_datedelta(delta):
     assert +delta == delta
 
 
 @pytest.mark.parametrize(
-    ('delta', 'other'),
+    ("delta", "other"),
     [
         (dd(), None),
         (dd(), 0),
-        (dd(), 'a'),
+        (dd(), "a"),
         (dd(), []),
         (dd(), d.today()),
-    ]
+    ],
 )
 def test_add_or_subtract_unsupported_type(delta, other):
     with pytest.raises(TypeError):
@@ -492,13 +532,13 @@ def test_add_or_subtract_unsupported_type(delta, other):
 
 
 @pytest.mark.parametrize(
-    ('delta', 'other'),
+    ("delta", "other"),
     [
         (dd(), None),
         (dd(), 0),
-        (dd(), 'a'),
+        (dd(), "a"),
         (dd(), []),
-    ]
+    ],
 )
 def test_add_to_or_subtract_from_unsupported_type(delta, other):
     with pytest.raises(TypeError):
@@ -508,13 +548,13 @@ def test_add_to_or_subtract_from_unsupported_type(delta, other):
 
 
 @pytest.mark.parametrize(
-    ('delta', 'other'),
+    ("delta", "other"),
     [
         (dd(), None),
-        (dd(), 'a'),
+        (dd(), "a"),
         (dd(), []),
         (dd(), dd()),
-    ]
+    ],
 )
 def test_multiply_unsupported_type(delta, other):
     with pytest.raises(TypeError):
