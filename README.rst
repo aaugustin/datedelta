@@ -326,6 +326,11 @@ Compared to ``pendulum.Duration`` or ``dateutil.relativedelta.relativedelta``,
 Changelog
 =========
 
+1.4
+---
+
+* Update supported Python versions.
+
 1.3
 ---
 
