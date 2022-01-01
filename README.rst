@@ -82,12 +82,12 @@ to 0-based indexing, which is the convention Python uses.
 
 For example:
 
-* If someone subscribes for a year starting on 2016-02-29 inclusive, the end
-  date must be 2017-03-01 exclusive. If it was 2016-02-28 exclusive, that day
+* If someone subscribes for a year starting on 2020-02-29 inclusive, the end
+  date must be 2021-03-01 exclusive. If it was 2020-02-28 exclusive, that day
   would be missing from the subscription period.
 
-* If someone subscribes for three months starting on 2016-03-31 inclusive, the
-  end date must be 2016-07-01 exclusive. If it was 2016-06-30 exclusive, that
+* If someone subscribes for three months starting on 2020-03-31 inclusive, the
+  end date must be 2020-07-01 exclusive. If it was 2020-06-30 exclusive, that
   day would be missing from the subscription period.
 
 Operations are always performed on years, then months, then days. This order
@@ -117,44 +117,44 @@ calculations with little code.
     >>> import datetime
     >>> import datedelta
 
-    >>> datetime.date(2016, 1, 1) + datedelta.YEAR
-    datetime.date(2017, 1, 1)
+    >>> datetime.date(2022, 1, 1) + datedelta.YEAR
+    datetime.date(2023, 1, 1)
 
-    >>> datetime.date(2017, 1, 1) - datedelta.YEAR
-    datetime.date(2016, 1, 1)
+    >>> datetime.date(2023, 1, 1) - datedelta.YEAR
+    datetime.date(2022, 1, 1)
 
-    >>> datetime.date(2016, 2, 29) + datedelta.YEAR
-    datetime.date(2017, 3, 1)
+    >>> datetime.date(2024, 2, 29) + datedelta.YEAR
+    datetime.date(2025, 3, 1)
 
-    >>> datetime.date(2017, 3, 1) - datedelta.YEAR
-    datetime.date(2016, 3, 1)
+    >>> datetime.date(2025, 3, 1) - datedelta.YEAR
+    datetime.date(2024, 3, 1)
 
-    >>> datetime.date(2016, 1, 1) + datedelta.MONTH
-    datetime.date(2016, 2, 1)
+    >>> datetime.date(2022, 1, 1) + datedelta.MONTH
+    datetime.date(2022, 2, 1)
 
-    >>> datetime.date(2016, 2, 1) - datedelta.MONTH
-    datetime.date(2016, 1, 1)
+    >>> datetime.date(2022, 2, 1) - datedelta.MONTH
+    datetime.date(2022, 1, 1)
 
-    >>> datetime.date(2016, 1, 31) + datedelta.MONTH
-    datetime.date(2016, 3, 1)
+    >>> datetime.date(2022, 1, 31) + datedelta.MONTH
+    datetime.date(2022, 3, 1)
 
-    >>> datetime.date(2016, 3, 1) - datedelta.MONTH
-    datetime.date(2016, 2, 1)
+    >>> datetime.date(2022, 3, 1) - datedelta.MONTH
+    datetime.date(2022, 2, 1)
 
-    >>> datetime.date(2016, 1, 1) + datedelta.WEEK
-    datetime.date(2016, 1, 8)
+    >>> datetime.date(2022, 1, 1) + datedelta.WEEK
+    datetime.date(2022, 1, 8)
 
-    >>> datetime.date(2016, 1, 1) - datedelta.WEEK
-    datetime.date(2015, 12, 25)
+    >>> datetime.date(2022, 1, 1) - datedelta.WEEK
+    datetime.date(2021, 12, 25)
 
-    >>> datetime.date(2016, 1, 1) + datedelta.DAY
-    datetime.date(2016, 1, 2)
+    >>> datetime.date(2022, 1, 1) + datedelta.DAY
+    datetime.date(2022, 1, 2)
 
-    >>> datetime.date(2016, 1, 1) - datedelta.DAY
-    datetime.date(2015, 12, 31)
+    >>> datetime.date(2022, 1, 1) - datedelta.DAY
+    datetime.date(2021, 12, 31)
 
-Note that ``datedelta.DAY`` behaves exactly like ``datetime.timedelta(1)``.
-It's only provided for consistency.
+``datedelta.DAY`` behaves exactly like ``datetime.timedelta(1)``. It's only
+provided for consistency.
 
 Arbitrary intervals
 -------------------
@@ -166,50 +166,49 @@ Arbitrary intervals
     >>> import datetime
     >>> import datedelta
 
-    >>> datetime.date(2016, 3, 23) + datedelta.datedelta(years=1, months=1, days=-1)
-    datetime.date(2017, 4, 22)
+    >>> datetime.date(2022, 3, 23) + datedelta.datedelta(years=1, months=1, days=-1)
+    datetime.date(2023, 4, 22)
 
-    >>> datetime.date(2016, 3, 23) - datedelta.datedelta(years=-1, months=-1, days=1)
-    datetime.date(2017, 4, 22)
+    >>> datetime.date(2022, 3, 23) - datedelta.datedelta(years=-1, months=-1, days=1)
+    datetime.date(2023, 4, 22)
 
-    >>> datetime.date(2016, 2, 29) + datedelta.datedelta(years=2)
-    datetime.date(2018, 3, 1)
+    >>> datetime.date(2024, 2, 29) + datedelta.datedelta(years=2)
+    datetime.date(2026, 3, 1)
 
-    >>> datetime.date(2020, 2, 29) - datedelta.datedelta(years=2)
-    datetime.date(2018, 3, 1)
+    >>> datetime.date(2024, 2, 29) - datedelta.datedelta(years=2)
+    datetime.date(2022, 3, 1)
 
-    >>> datetime.date(2016, 2, 29) + datedelta.datedelta(years=2, days=-1)
-    datetime.date(2018, 2, 28)
+    >>> datetime.date(2024, 2, 29) + datedelta.datedelta(years=2, days=-1)
+    datetime.date(2026, 2, 28)
 
-    >>> datetime.date(2020, 2, 29) - datedelta.datedelta(years=2, days=1)
-    datetime.date(2018, 2, 28)
+    >>> datetime.date(2024, 2, 29) - datedelta.datedelta(years=2, days=1)
+    datetime.date(2022, 2, 28)
 
-    >>> datetime.date(2016, 2, 29) + datedelta.datedelta(years=2, months=6)
-    datetime.date(2018, 9, 1)
+    >>> datetime.date(2024, 2, 29) + datedelta.datedelta(years=2, months=6)
+    datetime.date(2026, 9, 1)
 
-    >>> datetime.date(2020, 2, 29) - datedelta.datedelta(years=2, months=-6)
-    datetime.date(2018, 9, 1)
+    >>> datetime.date(2024, 2, 29) - datedelta.datedelta(years=2, months=-6)
+    datetime.date(2022, 9, 1)
 
-    >>> datetime.date(2016, 2, 29) + datedelta.datedelta(years=4)
+    >>> datetime.date(2024, 2, 29) + datedelta.datedelta(years=4)
+    datetime.date(2028, 2, 29)
+
+    >>> datetime.date(2024, 2, 29) - datedelta.datedelta(years=4)
     datetime.date(2020, 2, 29)
 
-    >>> datetime.date(2020, 2, 29) - datedelta.datedelta(years=4)
-    datetime.date(2016, 2, 29)
+    >>> datetime.date(2024, 2, 29) + datedelta.datedelta(years=4, days=1)
+    datetime.date(2028, 3, 1)
 
-    >>> datetime.date(2016, 2, 29) + datedelta.datedelta(years=4, days=1)
+    >>> datetime.date(2024, 2, 29) - datedelta.datedelta(years=4, days=-1)
     datetime.date(2020, 3, 1)
 
-    >>> datetime.date(2020, 2, 29) - datedelta.datedelta(years=4, days=-1)
-    datetime.date(2016, 3, 1)
+    >>> datetime.date(2024, 2, 29) + datedelta.datedelta(years=4, months=6)
+    datetime.date(2028, 8, 29)
 
-    >>> datetime.date(2016, 2, 29) + datedelta.datedelta(years=4, months=6)
+    >>> datetime.date(2024, 2, 29) - datedelta.datedelta(years=4, months=-6)
     datetime.date(2020, 8, 29)
 
-    >>> datetime.date(2020, 2, 29) - datedelta.datedelta(years=4, months=-6)
-    datetime.date(2016, 8, 29)
-
-These results may appear slightly surprising. However, they're consistent, for
-reasons explained in the "Behavior" section above.
+These results are mathematically consistent, as explained in "Behavior" above.
 
 Other operations
 ----------------
@@ -217,10 +216,10 @@ Other operations
 ``datedelta`` instances can be added, subtracted, and multiplied with an
 integer. However there are some restrictions on addition and subtraction.
 
-As demonstrated in the "Limitations" section below, adding then subtracting a
-given datedelta to a date doesn't always return the original date. In order to
-prevent bugs caused by this behavior, when the result of adding or subtracting
-two ``datedelta`` isn't well defined, that operation raises ``ValueError``.
+Adding then subtracting a given datedelta to a date doesn't always return the
+original date. In order to prevent bugs caused by this behavior, when the result
+of adding or subtracting two ``datedelta`` isn't well defined, a ``ValueError``
+is raised.
 
 .. code-block:: pycon
 
@@ -259,17 +258,17 @@ return the original value:
     >>> import datetime
     >>> import datedelta
 
-    >>> datetime.date(2020, 2, 29) + datedelta.datedelta(years=1)
-    datetime.date(2021, 3, 1)
+    >>> datetime.date(2024, 2, 29) + datedelta.datedelta(years=1)
+    datetime.date(2025, 3, 1)
 
-    >>> datetime.date(2021, 3, 1) - datedelta.datedelta(years=1)
-    datetime.date(2020, 3, 1)
+    >>> datetime.date(2025, 3, 1) - datedelta.datedelta(years=1)
+    datetime.date(2024, 3, 1)
 
-    >>> datetime.date(2020, 1, 31) + datedelta.datedelta(months=1)
-    datetime.date(2020, 3, 1)
+    >>> datetime.date(2024, 1, 31) + datedelta.datedelta(months=1)
+    datetime.date(2024, 3, 1)
 
-    >>> datetime.date(2020, 3, 1) - datedelta.datedelta(months=1)
-    datetime.date(2020, 2, 1)
+    >>> datetime.date(2024, 3, 1) - datedelta.datedelta(months=1)
+    datetime.date(2024, 2, 1)
 
 Here are two examples where adding two ``datedelta`` gives a different result
 depending on the order of operations:
@@ -279,17 +278,17 @@ depending on the order of operations:
     >>> import datetime
     >>> import datedelta
 
-    >>> datetime.date(2016, 2, 29) + datedelta.datedelta(months=6) + datedelta.datedelta(years=1)
-    datetime.date(2017, 8, 29)
+    >>> datetime.date(2024, 2, 29) + datedelta.datedelta(months=6) + datedelta.datedelta(years=1)
+    datetime.date(2025, 8, 29)
 
-    >>> datetime.date(2016, 2, 29) + datedelta.datedelta(years=1) + datedelta.datedelta(months=6)
-    datetime.date(2017, 9, 1)
+    >>> datetime.date(2024, 2, 29) + datedelta.datedelta(years=1) + datedelta.datedelta(months=6)
+    datetime.date(2025, 9, 1)
 
-    >>> datetime.date(2016, 1, 31) + datedelta.datedelta(months=2) + datedelta.datedelta(months=5)
-    datetime.date(2016, 8, 31)
+    >>> datetime.date(2024, 1, 31) + datedelta.datedelta(months=2) + datedelta.datedelta(months=5)
+    datetime.date(2024, 8, 31)
 
-    >>> datetime.date(2016, 1, 31) + datedelta.datedelta(months=5) + datedelta.datedelta(months=2)
-    datetime.date(2016, 9, 1)
+    >>> datetime.date(2024, 1, 31) + datedelta.datedelta(months=5) + datedelta.datedelta(months=2)
+    datetime.date(2024, 9, 1)
 
 To avoid problems, you should always start from the same reference date and add
 a single ``datedelta``. Don't chain additions or subtractions.
