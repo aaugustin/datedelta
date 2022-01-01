@@ -3,12 +3,64 @@ datedelta
 
 ``datedelta.datedelta`` is ``datetime.timedelta`` for date arithmetic.
 
-It can add years, months, weeks, or days to dates while accounting for
-oddities of the Gregorian calendar. It can also subtract years, months, weeks,
-or days from dates.
+.. code-block:: pycon
 
-Typically, it's useful to compute yearly, monthly, or weekly subscriptions
-periods.
+    >>> import datetime
+    >>> import datedelta
+
+    >>> datetime.date(2025, 4, 22) + 2 * datedelta.WEEK
+    datetime.date(2025, 5, 6)
+
+    >>> datetime.date(2025, 4, 22) + 3 * datedelta.MONTH
+    datetime.date(2025, 7, 22)
+
+It accounts for oddities of the Gregorian calendar.
+
+.. code-block:: pycon
+
+    >>> datetime.date(2024, 2, 29) + datedelta.YEAR
+    datetime.date(2025, 3, 1)
+
+    >>> datetime.date(2024, 2, 29) + 4 * datedelta.YEAR
+    datetime.date(2028, 2, 29)
+
+It's convenient for computing yearly, monthly, or weekly subscriptions periods.
+
+.. code-block:: pycon
+
+    >>> start_date = datetime.date(2024, 1, 30)
+    >>> for n in range(12):
+    ...     print(repr(start_date + n * datedelta.MONTH))
+    datetime.date(2024, 1, 30)
+    datetime.date(2024, 3, 1)
+    datetime.date(2024, 3, 30)
+    datetime.date(2024, 4, 30)
+    datetime.date(2024, 5, 30)
+    datetime.date(2024, 6, 30)
+    datetime.date(2024, 7, 30)
+    datetime.date(2024, 8, 30)
+    datetime.date(2024, 9, 30)
+    datetime.date(2024, 10, 30)
+    datetime.date(2024, 11, 30)
+    datetime.date(2024, 12, 30)
+
+    >>> start_date = datetime.date(2024, 1, 31)
+    >>> for n in range(12):
+    ...     print(repr(start_date + n * datedelta.MONTH))
+    datetime.date(2024, 1, 31)
+    datetime.date(2024, 3, 1)
+    datetime.date(2024, 3, 31)
+    datetime.date(2024, 5, 1)
+    datetime.date(2024, 5, 31)
+    datetime.date(2024, 7, 1)
+    datetime.date(2024, 7, 31)
+    datetime.date(2024, 8, 31)
+    datetime.date(2024, 10, 1)
+    datetime.date(2024, 10, 31)
+    datetime.date(2024, 12, 1)
+    datetime.date(2024, 12, 31)
+
+It guarantees consistent results on arithmetic operations that it supports.
 
 Behavior
 ========
@@ -21,16 +73,22 @@ There are two date arithmetic traps in the Gregorian calendar:
 2. Variable number of days in months. Problems arise when adding months to a
    29th, 30th or 31st gives a result in a month where that day doesn't exist.
 
-In both cases, the result must be changed to the first day of the next month.
+In both cases, datedelta changes the result to the first day of the next month.
 
 This method gives consistent results provided periods are represented by
 (start date inclusive, end date exclusive) — that's [start date, end date) if
 you prefer the mathematical notation. This representation of periods is akin
 to 0-based indexing, which is the convention Python uses.
 
-For example, if someone subscribes for a year starting on 2016-02-29 inclusive,
-the end date must be 2017-03-01 exclusive. If it was 2016-02-28 exclusive, the
-subscription would be one day too short.
+For example:
+
+* If someone subscribes for a year starting on 2016-02-29 inclusive, the end
+  date must be 2017-03-01 exclusive. If it was 2016-02-28 exclusive, that day
+  would be missing from the subscription period.
+
+* If someone subscribes for three months starting on 2016-03-31 inclusive, the
+  end date must be 2016-07-01 exclusive. If it was 2016-06-30 exclusive, that
+  day would be missing from the subscription period.
 
 Operations are always performed on years, then months, then days. This order
 usually provides the expected behavior. It also minimizes loss of precision.
@@ -54,7 +112,7 @@ Basic intervals
 The ``YEAR``, ``MONTH``, and ``DAY`` constants allow expressing common
 calculations with little code.
 
-.. code-block:: python
+.. code-block:: pycon
 
     >>> import datetime
     >>> import datedelta
@@ -103,7 +161,7 @@ Arbitrary intervals
 
 ``datedelta`` objects provide support for arbitrary calculations.
 
-.. code-block:: python
+.. code-block:: pycon
 
     >>> import datetime
     >>> import datedelta
@@ -164,7 +222,7 @@ given datedelta to a date doesn't always return the original date. In order to
 prevent bugs caused by this behavior, when the result of adding or subtracting
 two ``datedelta`` isn't well defined, that operation raises ``ValueError``.
 
-.. code-block:: python
+.. code-block:: pycon
 
     >>> import datedelta
 
@@ -196,7 +254,7 @@ general.
 Here are two examples where adding a ``datedelta`` then subtracting it doesn't
 return the original value:
 
-.. code-block:: python
+.. code-block:: pycon
 
     >>> import datetime
     >>> import datedelta
@@ -216,7 +274,7 @@ return the original value:
 Here are two examples where adding two ``datedelta`` gives a different result
 depending on the order of operations:
 
-.. code-block:: python
+.. code-block:: pycon
 
     >>> import datetime
     >>> import datedelta
