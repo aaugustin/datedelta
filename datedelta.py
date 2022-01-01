@@ -38,21 +38,21 @@ class datedelta:
     def __repr__(self):
         args = []
         if self._years != 0:
-            args.append("years={}".format(self._years))
+            args.append(f"years={self._years}")
         if self._months != 0:
-            args.append("months={}".format(self._months))
+            args.append(f"months={self._months}")
         if self._days != 0:
-            args.append("days={}".format(self._days))
-        return "datedelta.datedelta({})".format(", ".join(args))
+            args.append(f"days={self._days}")
+        return f"datedelta.datedelta({', '.join(args)})"
 
     def __str__(self):
         bits = []
         if self._years != 0:
-            bits.append("{} year{}".format(self._years, _s(self._years)))
+            bits.append(f"{self._years} year{_s(self._years)}")
         if self._months != 0:
-            bits.append("{} month{}".format(self._months, _s(self._months)))
+            bits.append(f"{self._months} month{_s(self._months)}")
         if self._days != 0:
-            bits.append("{} day{}".format(self._days, _s(self._days)))
+            bits.append(f"{self._days} day{_s(self._days)}")
         return ", ".join(bits) or "0 days"
 
     def __eq__(self, other):
