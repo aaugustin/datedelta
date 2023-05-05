@@ -2,7 +2,6 @@ import datetime
 
 
 class datedelta:
-
     __slots__ = ["_years", "_months", "_days"]
 
     def __init__(self, *, years=0, months=0, days=0):
