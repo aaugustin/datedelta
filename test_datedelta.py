@@ -198,7 +198,7 @@ def test_equal_not_equal_and_hash(delta_1, delta_2, is_equal):
     assert (delta_2 == delta_1) == is_equal
     assert (delta_1 != delta_2) != is_equal
     assert (delta_2 != delta_1) != is_equal
-    if type(delta_1) == type(delta_2) == dd:
+    if type(delta_1) is type(delta_2) is dd:
         # Technically, hashes could be equal even if values are different, but
         # that case doesn't happen in the current implementation.
         assert (hash(delta_1) == hash(delta_2)) == is_equal
